@@ -4,11 +4,14 @@
 // const NOTIFICACION_DANGER = 2;
 // const NOTIFICACION_WARNIG = 3;
 
-function insertarContacto() 
+function insertarContacto()
 {
     //obtener datos
     let nombre = document.getElementById('nombre').value;
     let correo = document.getElementById('correo').value;
+
+    //cerrar modal
+    bootstrap.Modal.getInstance(document.getElementById('crearContactoModal')).hide();
 
     //eliminar tabla
     eliminarTabla();
