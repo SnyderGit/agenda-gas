@@ -77,6 +77,57 @@ document.getElementById('imgForm').addEventListener('drop', function(event)
 });
 
 
+document.getElementById('copiarCorreo').addEventListener('click', function(event)
+{
+    copiarContenido(this, 'correoInfoContacto');
+});
+
+document.getElementById('copiarTelf').addEventListener('click', function(event)
+{
+    copiarContenido(this, 'telfInfoContacto');
+});
+
+function copiarContenido(icono, id)
+{
+    let texto = document.getElementById(id).textContent;
+
+    navigator.clipboard.writeText(texto)
+    .then(() =>
+    {
+        icono.classList.remove('bi-clipboard');
+        icono.classList.add('bi-check-lg');
+        icono.title = 'Copiado';
+        bootstrap.Tooltip.getOrCreateInstance(icono).show();
+        restaurarIcono(icono);
+    })
+    .catch(() =>
+    {
+      icono.title = 'Error al copiar';
+      bootstrap.Tooltip.getOrCreateInstance(icono).show();
+      restaurarIcono(icono);
+    });
+};
+
+function restaurarIcono(icono)
+{
+    setTimeout(function()
+        {
+            icono.classList.remove('bi-check-lg');
+            icono.classList.add('bi-clipboard');
+            icono.title = '';
+            bootstrap.Tooltip.getInstance(icono).dispose();
+        }, 2000);
+};
+
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+
+
+
+
+
 function subirArriba()
 {
      document.body.scrollTop = 0;
@@ -95,7 +146,6 @@ function mostrar()
     crearTarjetasContactos();
     eliminarLoader();
 }
-
 
 
 
@@ -284,6 +334,7 @@ function contactosImportadosError()
 //habilitar popovers
 const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
 const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
 
 
 
