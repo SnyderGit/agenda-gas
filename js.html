@@ -1,5 +1,8 @@
 <script>
-    
+////////////////////
+// CONSTANTES
+////////////////////
+
 const ICONO_CHECK = 'bi-check2-square';
 const ICONO_PAPELERA = 'bi-trash';
 const ICONO_CONTACTO = 'bi-person-plus-fill';
@@ -13,6 +16,10 @@ const LOTTIE_ERROR = 'https://assets8.lottiefiles.com/packages/lf20_qw8ewk7k.jso
 const LOTTIE_ADVERTENCIA = 'https://assets2.lottiefiles.com/packages/lf20_Tkwjw8.json';
 const LOTTIE_LOADER_AVION_PAPEL = 'https://assets8.lottiefiles.com/packages/lf20_x62chJ.json';
 const LOTTIE_LOADER_HMSLOADING = 'https://assets8.lottiefiles.com/packages/lf20_t9gkkhz4.json';
+
+////////////////////
+// EVENTOS
+////////////////////
 
 //boton subir 
 window.addEventListener('scroll', function()
@@ -33,6 +40,43 @@ document.getElementById('imagen').addEventListener('change', function()
     document.getElementById('imgForm').src = URL.createObjectURL(this.files[0]);
 });
 
+//dragover
+document.getElementById('imgForm').addEventListener('dragover', function(event)
+{
+    event.preventDefault();
+    this.style.filter = 'opacity(0%)';
+    document.getElementById('cajaIconoForm').style.display = 'flex';
+});
+
+//dragleave
+document.getElementById('imgForm').addEventListener('dragleave', function(event)
+{
+    this.style.filter = 'opacity(100%)';
+    document.getElementById('cajaIconoForm').style.display = 'none';
+
+});
+
+//drop
+document.getElementById('imgForm').addEventListener('drop', function(event)
+{
+    event.preventDefault();
+
+    let ficheros = event.dataTransfer.files;
+
+    //pasamos los archivos al input
+    document.getElementById('imagen').files = ficheros;
+
+    //creamos una url para mostrar la imagen
+    document.getElementById('imgForm').src = URL.createObjectURL(ficheros[0]);
+
+    //mostramos la imagen y quitamos zona de carga
+    this.style.filter = 'opacity(100%)';
+    document.getElementById('cajaIconoForm').style.display = 'none';
+
+
+});
+
+
 function subirArriba()
 {
      document.body.scrollTop = 0;
@@ -51,6 +95,14 @@ function mostrar()
     crearTarjetasContactos();
     eliminarLoader();
 }
+
+
+
+
+
+
+
+
 
 //INSERTAR CONTACTO
 function insertarContacto()
